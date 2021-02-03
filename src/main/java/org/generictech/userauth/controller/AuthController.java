@@ -55,7 +55,7 @@ public class AuthController {
 			throws NoSuchAlgorithmException, InvalidKeySpecException, SystemUserNotFoundException, CredentialsNotFoundException {
 		SystemUserDTO user = authService.login(creds);
 		if (user != null) {
-			String token = tokenUtility.createJWT(String.valueOf(user.getId()), "Expenser", user.getUsername(), 20000000);
+			String token = tokenUtility.createJWT(String.valueOf(user.getId()), "org.generictech.Expenser", user.getUsername(), 20000000);
 			log.info("User " + user.getUsername() + " succesfully logged in");
 			return ResponseEntity.status(HttpStatus.OK).header("tokenId", token).body(user);				
 		} else {
@@ -77,6 +77,20 @@ public class AuthController {
 	public ResponseEntity<SystemUserDTO> validateToken(@RequestBody Token token) 
 			throws NumberFormatException, SystemUserNotFoundException, InvalidTokenException, BadParameterException {
 		return new ResponseEntity<SystemUserDTO>(authService.validateToken(token.getToken()), HttpStatus.OK);
+	}
+	
+	/**
+	 * Exception handler method for {@link BadParameterExceptions}. 
+	 * @param web WebRequest
+	 * @param e Exception
+	 * @return ResponseEntity<ExceptionResponse>
+	 * @since 1.0
+	 */
+	@ExceptionHandler(BadParameterException.class)
+	public ResponseEntity<ExceptionResponse> badParamException(WebRequest web, Exception e) {
+		log.error(e.getMessage());
+		return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(new Date()
+					, 400, e.getClass().getSimpleName() , e.getMessage()), HttpStatus.BAD_REQUEST);
 	}
 	
 	/**

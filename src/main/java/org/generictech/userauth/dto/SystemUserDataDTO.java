@@ -30,6 +30,15 @@ public class SystemUserDataDTO {
 		this.password = password;
 	}
 
+	public SystemUserDataDTO(String firstName, String lastName, String email, String username, String password) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.username = username;
+		this.password = password;
+	}
+
 	public int getId() {
 		return id;
 	}

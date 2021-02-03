@@ -131,6 +131,20 @@ public class SystemUserController {
 	}
 	
 	/**
+	 * Exception handler method for {@link BadParameterExceptions}. 
+	 * @param web WebRequest
+	 * @param e Exception
+	 * @return ResponseEntity<ExceptionResponse>
+	 * @since 1.0
+	 */
+	@ExceptionHandler(InsertFailedException.class)
+	public ResponseEntity<ExceptionResponse> insertFailedException(WebRequest web, Exception e) {
+		log.error(e.getMessage());
+		return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(new Date()
+					, 409, e.getClass().getSimpleName() , e.getMessage()), HttpStatus.CONFLICT);
+	}
+	
+	/**
 	 * Exception handler method for not found exceptions, including SystemUserNotFoundException and CredentialsNotFoundException.
 	 * @param web WebRequest
 	 * @param e Exception

@@ -84,7 +84,10 @@ public class SystemUserService {
 	 * @since 1.0
 	 */
 	public SystemUser findByCriteria(SystemUserParams params, int id) throws BadParameterException, SystemUserNotFoundException {
-		Optional<SystemUser> user;
+		Optional<SystemUser> user = null;
+		if (params == null) {
+			throw new BadParameterException();
+		}
 		if (params.getId() != 0) {
 			user = systemUserRepo.findById(params.getId());
 		} else if (params.getUsername() != null) {
@@ -93,11 +96,9 @@ public class SystemUserService {
 			user = systemUserRepo.findByEmail(params.getEmail());
 		} else if (params.empty()) {
 			user = systemUserRepo.findById(id);
-		} else {
-			throw new BadParameterException();
-		}
+		} 
 		
-		if (user.isPresent()) {
+		if (user != null && user.isPresent()) {
 			return user.get();
 		} else {
 			throw new SystemUserNotFoundException();
@@ -119,6 +120,7 @@ public class SystemUserService {
 				, userData.getEmail(), userData.getUsername());
 		SystemUser u = systemUserRepo.save(user);
 		if (!credentialsService.save(userData.getPassword(), u)) {
+			systemUserRepo.delete(u);
 			throw new InsertFailedException("Credentials insert failed");
 		}
 		return u;
@@ -163,7 +165,7 @@ public class SystemUserService {
 	}
 	
 	/**
-	 * Method to handle deleting a user from the databse.
+	 * Method to handle deleting a user from the database.
 	 * @param id
 	 * @return boolean
 	 * @throws SystemUserNotFoundException
@@ -172,8 +174,8 @@ public class SystemUserService {
 	 */
 	public boolean delete(int id) throws SystemUserNotFoundException, CredentialsNotFoundException {
 		Optional<SystemUser> user = systemUserRepo.findById(id);
-		Credentials creds = credentialsService.findByUserId(user.get().getId());
 		if (user.isPresent()) {
+			Credentials creds = credentialsService.findByUserId(user.get().getId());
 			credentialsService.delete(creds.getId());
 			systemUserRepo.delete(user.get());
 			return true;
