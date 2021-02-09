@@ -12,8 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 /**
  * Config class to configure web security
@@ -42,8 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-			.csrf().disable()
 			.cors().and()
+			.csrf().disable()
 			.httpBasic().disable()
 			.formLogin().disable()
 			.authorizeRequests()
@@ -56,18 +56,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Bean
-	public CorsConfigurationSource corsConfigurationSource() {
-		final CorsConfiguration config = new CorsConfiguration();
+	public CorsFilter corsFilter() {
+		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
 		config.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH"));
 		config.setAllowedHeaders(Arrays.asList("Accept", "Authorization", "Content-Type"
 				, "Access-Control-Allow-Origin", "Access-Control-Allow-Methods", "Access-Control-Allow-Headers"
-				, "Access-Control-Expose-Headers"));
+				, "Access-Control-Expose-Headers", "tokenId"));
 		config.setExposedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Access-Control-Expose-Headers"
-				, "Content-Type", "Authorization", "Accept"));
-		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+				, "Content-Type", "Authorization", "Accept", "tokenId"));
+		config.setAllowCredentials(true);
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", config);
-		return source;
+		CorsFilter bean = new CorsFilter(source);
+		return bean;
 	}
 	
 }
