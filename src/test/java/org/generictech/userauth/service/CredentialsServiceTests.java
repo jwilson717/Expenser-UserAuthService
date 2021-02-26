@@ -37,13 +37,13 @@ public class CredentialsServiceTests {
 	private Credentials creds;
 	private SystemUser user;
 	private Credentials creds2;
-	private SystemUser user2;
+//	private SystemUser user2;
 	
 	@BeforeEach
 	public void setUp() {
 		user = new SystemUser(1, "Test", "Tester", "test@test.com", "TTester");
 		creds = new Credentials(1, "password", "salt", user);
-		user2 = new SystemUser(2, "Tested", "Testers", "t@t.com", "TdTesters");
+//		user2 = new SystemUser(2, "Tested", "Testers", "t@t.com", "TdTesters");
 		creds2 = new Credentials(3, "password2", "salt2", user);
 	}
 	

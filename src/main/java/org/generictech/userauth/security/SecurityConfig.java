@@ -1,8 +1,5 @@
 package org.generictech.userauth.security;
 
-import java.util.Arrays;
-
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,9 +8,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 /**
  * Config class to configure web security
@@ -36,13 +30,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		web
 			.ignoring()
 			.mvcMatchers(HttpMethod.POST, "/login")
-			.mvcMatchers(HttpMethod.POST, "/systemuser");
+			.mvcMatchers(HttpMethod.POST, "/systemuser")
+			.mvcMatchers(HttpMethod.POST, "/validate");
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-			.cors().and()
+			.cors().disable()
 			.csrf().disable()
 			.httpBasic().disable()
 			.formLogin().disable()
@@ -53,23 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 			.addFilterAt(tokenAuthFilter, UsernamePasswordAuthenticationFilter.class)
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-	}
-	
-	@Bean
-	public CorsFilter corsFilter() {
-		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-		config.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH"));
-		config.setAllowedHeaders(Arrays.asList("Accept", "Authorization", "Content-Type"
-				, "Access-Control-Allow-Origin", "Access-Control-Allow-Methods", "Access-Control-Allow-Headers"
-				, "Access-Control-Expose-Headers", "tokenId"));
-		config.setExposedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Access-Control-Expose-Headers"
-				, "Content-Type", "Authorization", "Accept", "tokenId"));
-		config.setAllowCredentials(true);
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", config);
-		CorsFilter bean = new CorsFilter(source);
-		return bean;
 	}
 	
 }

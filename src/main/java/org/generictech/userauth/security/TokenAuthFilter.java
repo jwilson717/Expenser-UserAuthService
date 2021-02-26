@@ -31,7 +31,7 @@ public class TokenAuthFilter extends OncePerRequestFilter {
 	private final String HEADER = "tokenId";
 	@Autowired
 	private TokenUtility tokenUtility;
-	private final ArrayList<String> PUBLIC_ENDPOINTS = new ArrayList<>(Arrays.asList("/login", "/systemuser"));
+	private final ArrayList<String> PUBLIC_ENDPOINTS = new ArrayList<>(Arrays.asList("/login", "/systemuser", "/validate"));
 	
 	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws 
 		IOException, ServletException {
