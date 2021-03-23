@@ -39,7 +39,7 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(InvalidTokenException.class)
 	public ResponseEntity<ExceptionResponse> invalidToken(WebRequest web, Exception e) {
 		log.error(e.getMessage());
-		return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(new Date()
+		return new ResponseEntity<>(new ExceptionResponse(new Date()
 				, 401, e.getClass().getSimpleName() , e.getMessage()), HttpStatus.UNAUTHORIZED);
 	}
 
@@ -53,7 +53,7 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(BadParameterException.class)
 	public ResponseEntity<ExceptionResponse> badParamException(WebRequest web, Exception e) {
 		log.error(e.getMessage());
-		return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(new Date()
+		return new ResponseEntity<>(new ExceptionResponse(new Date()
 					, 400, e.getClass().getSimpleName() , e.getMessage()), HttpStatus.BAD_REQUEST);
 	}
 	
@@ -67,7 +67,7 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(InsertFailedException.class)
 	public ResponseEntity<ExceptionResponse> insertFailedException(WebRequest web, Exception e) {
 		log.error(e.getMessage());
-		return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(new Date()
+		return new ResponseEntity<>(new ExceptionResponse(new Date()
 					, 409, e.getClass().getSimpleName() , e.getMessage()), HttpStatus.CONFLICT);
 	}
 	
@@ -81,7 +81,7 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler({SystemUserNotFoundException.class, CredentialsNotFoundException.class})
 	public ResponseEntity<ExceptionResponse> notFoundException(WebRequest web, Exception e) {
 		log.error(e.getMessage());
-		return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(new Date()
+		return new ResponseEntity<>(new ExceptionResponse(new Date()
 					, 404, e.getClass().getSimpleName() , e.getMessage()), HttpStatus.NOT_FOUND);
 	}
 	
@@ -95,7 +95,7 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler({NoSuchAlgorithmException.class, InvalidKeySpecException.class})
 	public ResponseEntity<ExceptionResponse> internalServerErrors(Exception e){
 		log.error(e.getMessage());
-		return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(new Date()
+		return new ResponseEntity<>(new ExceptionResponse(new Date()
 					, 500, e.getClass().getSimpleName() , e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 

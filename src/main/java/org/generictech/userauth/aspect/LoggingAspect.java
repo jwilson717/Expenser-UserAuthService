@@ -26,7 +26,7 @@ public class LoggingAspect {
 	private HttpServletRequest req;
 
 	@Pointcut("execution(* org.generictech.userauth.controller.*.*(..))")
-	public void controllerMethods() {}
+	public void controllerMethods() {/*empty method to catch all controller methods for @Before aspect*/}
 	
 	@Before("controllerMethods()")
 	public void beforeHttpRequest() {
