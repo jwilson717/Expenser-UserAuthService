@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Docker image') {
         	steps {
-        		sh "docker build . -t expenser-eureka-image"
+        		sh "docker build . -t expenser-userauthservice-image"
         	}
         }
     }
