@@ -72,7 +72,7 @@ public class AuthController {
 	@PostMapping("/validate")
 	public ResponseEntity<SystemUserDTO> validateToken(@RequestBody Token token) 
 			throws NumberFormatException, SystemUserNotFoundException, InvalidTokenException, BadParameterException {
-		return new ResponseEntity<SystemUserDTO>(authService.validateToken(token.getToken()), HttpStatus.OK);
+		return new ResponseEntity<>(authService.validateToken(token.getToken()), HttpStatus.OK);
 	}
 
 }

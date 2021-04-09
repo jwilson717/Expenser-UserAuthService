@@ -73,9 +73,7 @@ public class CredentialsServiceTests {
 	public void findByIdNotFoundTest() {
 		doReturn(Optional.ofNullable(null)).when(credentialsRepo).findById(2);
 		
-		assertThrows(CredentialsNotFoundException.class, () -> {
-			credentialsService.findById(2);
-		});
+		assertThrows(CredentialsNotFoundException.class, () -> credentialsService.findById(2));
 	}
 	
 	/**
@@ -114,8 +112,6 @@ public class CredentialsServiceTests {
 	public void findByUserIdNotFound() {
 		doReturn(Optional.ofNullable(null)).when(credentialsRepo).findCredentials(3);
 		
-		assertThrows(CredentialsNotFoundException.class, () -> {
-			credentialsService.findByUserId(3);
-		});
+		assertThrows(CredentialsNotFoundException.class, () -> credentialsService.findByUserId(3));
 	}
 }

@@ -114,9 +114,7 @@ public class SystemUserServiceTests {
 	public void findByUsernameNotFoundTest() {
 		doReturn(Optional.ofNullable(null)).when(systemUserRepo).findByUsername("Test");
 		
-		assertThrows(SystemUserNotFoundException.class, () -> {
-			systemUserService.findByUsername("Test");
-		});
+		assertThrows(SystemUserNotFoundException.class, () -> systemUserService.findByUsername("Test"));
 	}
 	
 	/**
@@ -143,9 +141,7 @@ public class SystemUserServiceTests {
 	public void findByEmailNotFoundTest() {
 		doReturn(Optional.ofNullable(null)).when(systemUserRepo).findByEmail("t@t.com");
 		
-		assertThrows(SystemUserNotFoundException.class, () -> {
-			systemUserService.findByEmail("t@t.com");
-		});
+		assertThrows(SystemUserNotFoundException.class, () -> systemUserService.findByEmail("t@t.com"));
 	}
 	
 	/**
@@ -203,9 +199,7 @@ public class SystemUserServiceTests {
 	public void findByCriteriaByIdNotFoundTest() {
 		params.setId(2);
 		doReturn(Optional.ofNullable(null)).when(systemUserRepo).findById(2);
-		assertThrows(SystemUserNotFoundException.class, () -> {
-			systemUserService.findByCriteria(params, 0);
-		});
+		assertThrows(SystemUserNotFoundException.class, () -> systemUserService.findByCriteria(params, 0));
 	}
 	
 	/**
@@ -235,9 +229,7 @@ public class SystemUserServiceTests {
 	public void findByCriteriaByUsernameNotFoundTest() {
 		params.setUsername("Test");
 		doReturn(Optional.ofNullable(null)).when(systemUserRepo).findByUsername("Test");
-		assertThrows(SystemUserNotFoundException.class, () -> {
-			systemUserService.findByCriteria(params, 0);
-		});
+		assertThrows(SystemUserNotFoundException.class, () -> systemUserService.findByCriteria(params, 0));
 	}
 	
 	/**
@@ -267,9 +259,7 @@ public class SystemUserServiceTests {
 	public void findByCriteriaByEmailNotFoundTest() {
 		params.setEmail("t@t.com");
 		doReturn(Optional.ofNullable(null)).when(systemUserRepo).findByEmail("t@t.com");
-		assertThrows(SystemUserNotFoundException.class, () -> {
-			systemUserService.findByCriteria(params, 0);
-		});
+		assertThrows(SystemUserNotFoundException.class, () -> systemUserService.findByCriteria(params, 0));
 	}
 	
 	/**
@@ -349,9 +339,7 @@ public class SystemUserServiceTests {
 		doReturn(user2).when(systemUserRepo).save(any(SystemUser.class));
 		doReturn(false).when(credentialsService).save(anyString(), any(SystemUser.class));
 		
-		assertThrows(InsertFailedException.class, () -> {
-			systemUserService.save(dto);
-		});
+		assertThrows(InsertFailedException.class, () -> systemUserService.save(dto));
 	}
 	
 	/**
@@ -388,9 +376,7 @@ public class SystemUserServiceTests {
 		dto.setId(3);
 	
 		doReturn(Optional.ofNullable(null)).when(systemUserRepo).findById(3);
-		assertThrows(SystemUserNotFoundException.class, () -> {
-			systemUserService.update(dto);
-		});		
+		assertThrows(SystemUserNotFoundException.class, () -> systemUserService.update(dto));		
 	}
 	
 	/**
@@ -414,8 +400,6 @@ public class SystemUserServiceTests {
 	public void deleteNotFoundTest() {
 		doReturn(Optional.ofNullable(null)).when(systemUserRepo).findById(3);
 		
-		assertThrows(SystemUserNotFoundException.class, () -> {
-			systemUserService.delete(3);
-		});
+		assertThrows(SystemUserNotFoundException.class, () -> systemUserService.delete(3));
 	}
 }

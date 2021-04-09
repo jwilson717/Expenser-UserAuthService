@@ -15,8 +15,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SystemUserParams {
 
-	int id;
-	String username, email;
+	private int id;
+	private String username;
+	private String email;
 	
 	public boolean empty() {
 		boolean empty = true;

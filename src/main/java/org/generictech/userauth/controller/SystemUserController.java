@@ -59,7 +59,7 @@ public class SystemUserController {
 		if (req.getQueryString() != null && params.empty()) {
 			throw new BadParameterException();
 		}
-		return new ResponseEntity<SystemUser>(systemUserService.findByCriteria(params, Integer.valueOf(claims.getId())), HttpStatus.OK);
+		return new ResponseEntity<>(systemUserService.findByCriteria(params, Integer.valueOf(claims.getId())), HttpStatus.OK);
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class SystemUserController {
 	@PostMapping("")
 	public ResponseEntity<SystemUser> save(@RequestBody SystemUserDataDTO userData) 
 			throws NoSuchAlgorithmException, InvalidKeySpecException, InsertFailedException {
-		return new ResponseEntity<SystemUser>(systemUserService.save(userData), HttpStatus.CREATED);
+		return new ResponseEntity<>(systemUserService.save(userData), HttpStatus.CREATED);
 	}
 	
 	/**
@@ -93,7 +93,7 @@ public class SystemUserController {
 	public ResponseEntity<SystemUser> update(@PathVariable int id, @RequestBody SystemUserDataDTO userData) 
 			throws NoSuchAlgorithmException, InvalidKeySpecException, SystemUserNotFoundException, CredentialsNotFoundException {
 		userData.setId(id);
-		return new ResponseEntity<SystemUser>(systemUserService.update(userData), HttpStatus.OK);
+		return new ResponseEntity<>(systemUserService.update(userData), HttpStatus.OK);
 	}
 	
 	/**
