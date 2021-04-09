@@ -84,7 +84,7 @@ public class SystemUserService {
 	 * @since 1.0
 	 */
 	public SystemUser findByCriteria(SystemUserParams params, int id) throws BadParameterException, SystemUserNotFoundException {
-		Optional<SystemUser> user = null;
+		Optional<SystemUser> user = Optional.ofNullable(null);
 		if (params == null) {
 			throw new BadParameterException();
 		}
@@ -98,7 +98,7 @@ public class SystemUserService {
 			user = systemUserRepo.findById(id);
 		} 
 		
-		if (user != null && user.isPresent()) {
+		if (user.isPresent() && user.get() != null) {
 			return user.get();
 		} else {
 			throw new SystemUserNotFoundException();

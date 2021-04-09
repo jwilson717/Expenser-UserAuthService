@@ -33,7 +33,7 @@ public class SystemUserParams {
 		if (!empty()) {
 			toString.append("?");
 		} else {
-			return null;
+			return "";
 		}
 		
 		if (id != 0) {
